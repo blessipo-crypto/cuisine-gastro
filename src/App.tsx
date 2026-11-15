@@ -14,6 +14,7 @@ import { CulinaryJourneySection } from './components/CulinaryJourneySection';
 import { ChefMonographModal, MonographTab } from './components/ChefMonographModal';
 import { SavedCarnetDrawer } from './components/SavedCarnetDrawer';
 import { RatatouilleIntro } from './components/RatatouilleIntro';
+import { OfflineBanner } from './components/OfflineBanner';
 
 const STORAGE_KEY = 'atlas_chefs_etoiles_carnet_v1';
 const ITEMS_PER_PAGE = 12;
@@ -582,6 +583,9 @@ export default function App() {
         onRemoveChef={toggleSaveChef}
         onSelectChef={handleOpenChef}
       />
+
+      {/* Offline Connectivity Indicator */}
+      <OfflineBanner />
     </div>
   );
 }

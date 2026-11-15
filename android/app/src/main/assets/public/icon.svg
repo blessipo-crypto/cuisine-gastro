@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#1C1917"/>
+  <rect x="28" y="28" width="456" height="456" rx="76" fill="none" stroke="#991B1B" stroke-width="8"/>
+  <!-- Chef Toque Silhouette -->
+  <path d="M168 238 C142 180, 174 128, 212 138 C228 102, 284 102, 300 138 C338 128, 370 180, 344 238 Z" fill="#FBF9F5"/>
+  <rect x="174" y="246" width="164" height="32" rx="6" fill="#FBF9F5"/>
+  <!-- Crimson Michelin Star Accent -->
+  <path d="M256 306 L273 346 L316 350 L283 378 L293 420 L256 397 L219 420 L229 378 L196 350 L239 346 Z" fill="#991B1B" stroke="#FDE68A" stroke-width="5" stroke-linejoin="round"/>
+</svg>
