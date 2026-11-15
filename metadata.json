@@ -1,0 +1,6 @@
+{
+  "name": "Atlas des Chefs Étoilés",
+  "description": "Encyclopédie gastronomique des chefs étoilés du monde : biographies, parcours culinaires, recherche par ville et département, recettes phares et galeries photos interactives.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
