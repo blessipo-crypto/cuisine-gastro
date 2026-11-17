@@ -18,6 +18,10 @@ import {
   ArrowUpRight,
   ShoppingBag,
   Plus,
+  Maximize2,
+  Minimize2,
+  Moon,
+  Sun,
 } from 'lucide-react';
 import { Chef } from '../types/chef';
 import { TECHNIQUES_GLOSSARY } from '../data/techniquesGlossary';
@@ -32,6 +36,10 @@ interface ChefMonographModalProps {
   chef: Chef | null;
   initialTab?: MonographTab;
   isSaved: boolean;
+  isDarkMode?: boolean;
+  onToggleDarkMode?: () => void;
+  isFullscreen?: boolean;
+  onToggleFullscreen?: () => void;
   shoppingItems: ShoppingListItem[];
   onToggleSave: (chefId: string) => void;
   onAddIngredientToShopping: (item: Omit<ShoppingListItem, 'id' | 'checked'>) => void;
@@ -45,6 +53,10 @@ export const ChefMonographModal: React.FC<ChefMonographModalProps> = ({
   chef,
   initialTab = 'bio',
   isSaved,
+  isDarkMode = false,
+  onToggleDarkMode,
+  isFullscreen = false,
+  onToggleFullscreen,
   shoppingItems,
   onToggleSave,
   onAddIngredientToShopping,
@@ -128,7 +140,9 @@ export const ChefMonographModal: React.FC<ChefMonographModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-[#141413]/70 backdrop-blur-xs flex items-center justify-center p-0 sm:p-5 lg:p-10 overscroll-contain"
+      className={`fixed inset-0 z-50 bg-[#141413]/70 backdrop-blur-xs flex items-center justify-center overscroll-contain ${
+        isFullscreen ? 'p-0' : 'p-0 sm:p-5 lg:p-10'
+      }`}
       onClick={onClose}
       role="dialog"
       aria-modal="true"
@@ -140,10 +154,18 @@ export const ChefMonographModal: React.FC<ChefMonographModalProps> = ({
           paddingTop: 'env(safe-area-inset-top, 0px)',
           paddingBottom: 'env(safe-area-inset-bottom, 0px)',
         }}
-        className="w-full max-w-[1220px] h-[100dvh] sm:h-auto sm:max-h-[92dvh] bg-[#FAF9F6] border border-[#E5E2DC] flex flex-col overflow-hidden shadow-2xl overscroll-contain"
+        className={`w-full bg-[#FAF9F6] flex flex-col overflow-hidden shadow-2xl overscroll-contain transition-all duration-300 ${
+          isFullscreen
+            ? 'max-w-none h-[100dvh] border-0'
+            : 'max-w-[1220px] h-[100dvh] sm:h-auto sm:max-h-[92dvh] border border-[#E5E2DC]'
+        }`}
       >
         {/* Top Luxury Magazine Monograph Header */}
-        <div className="px-4 sm:px-8 lg:px-12 py-4 sm:py-6 bg-white border-b border-[#E5E2DC] flex items-start justify-between gap-4 shrink-0">
+        <div
+          className={`px-4 sm:px-8 lg:px-12 bg-white border-b border-[#E5E2DC] flex items-start justify-between gap-4 shrink-0 ${
+            isFullscreen ? 'py-3 sm:py-4' : 'py-4 sm:py-6'
+          }`}
+        >
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] uppercase tracking-[0.16em] text-[#5C5B57]">
               <MichelinStars
@@ -167,21 +189,76 @@ export const ChefMonographModal: React.FC<ChefMonographModalProps> = ({
               </span>
             </div>
 
-            <h2 className="font-serif text-2xl sm:text-4xl lg:text-5xl font-normal text-[#141413] mt-1.5 truncate">
+            <h2
+              className={`font-serif font-normal text-[#141413] mt-1 truncate ${
+                isFullscreen
+                  ? 'text-xl sm:text-3xl lg:text-4xl'
+                  : 'text-2xl sm:text-4xl lg:text-5xl'
+              }`}
+            >
               {chef.name}
             </h2>
 
-            <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-[#5C5B57]">
-              <span className="font-serif italic text-lg sm:text-xl text-[#141413]">
-                {chef.restaurant}
-              </span>
-              <span className="text-xs text-[#5C5B57] hidden md:inline">
-                {chef.restaurantAddress}
-              </span>
-            </div>
+            {!isFullscreen && (
+              <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-[#5C5B57]">
+                <span className="font-serif italic text-lg sm:text-xl text-[#141413]">
+                  {chef.restaurant}
+                </span>
+                <span className="text-xs text-[#5C5B57] hidden md:inline">
+                  {chef.restaurantAddress}
+                </span>
+              </div>
+            )}
           </div>
 
           <div className="flex items-center gap-2 shrink-0">
+            {onToggleDarkMode && (
+              <button
+                type="button"
+                onClick={onToggleDarkMode}
+                aria-pressed={isDarkMode}
+                title={isDarkMode ? 'Passer au Mode Clair' : 'Passer au Mode Obscur'}
+                className="min-h-[48px] min-w-[48px] inline-flex items-center justify-center p-2 bg-[#FAF9F6] text-[#141413] border border-[#E5E2DC] hover:border-[#B89758] transition-all duration-300 cursor-pointer shrink-0"
+              >
+                {isDarkMode ? (
+                  <Sun className="w-4 h-4 text-[#B89758]" strokeWidth={1.35} aria-hidden="true" />
+                ) : (
+                  <Moon className="w-4 h-4 text-[#B89758]" strokeWidth={1.35} aria-hidden="true" />
+                )}
+              </button>
+            )}
+
+            {onToggleFullscreen && (
+              <button
+                type="button"
+                onClick={onToggleFullscreen}
+                aria-pressed={isFullscreen}
+                title={
+                  isFullscreen
+                    ? 'Quitter le plein écran'
+                    : 'Maximiser la zone de lecture en plein écran'
+                }
+                className={`min-h-[48px] min-w-[48px] inline-flex items-center justify-center gap-2 px-3.5 py-2 text-[11px] uppercase tracking-[0.14em] font-medium border transition-all duration-300 cursor-pointer whitespace-nowrap shrink-0 ${
+                  isFullscreen
+                    ? 'bg-[#9E1B24] text-[#FAF9F6] border-[#9E1B24]'
+                    : 'bg-[#FAF9F6] text-[#141413] border-[#E5E2DC] hover:border-[#B89758]'
+                }`}
+              >
+                {isFullscreen ? (
+                  <Minimize2 className="w-4 h-4" strokeWidth={1.35} aria-hidden="true" />
+                ) : (
+                  <Maximize2
+                    className="w-4 h-4 text-[#B89758]"
+                    strokeWidth={1.35}
+                    aria-hidden="true"
+                  />
+                )}
+                <span className="hidden md:inline">
+                  {isFullscreen ? 'Quitter Plein Écran' : 'Plein écran'}
+                </span>
+              </button>
+            )}
+
             <button
               type="button"
               onClick={() => onToggleSave(chef.id)}

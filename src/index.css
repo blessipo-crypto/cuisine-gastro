@@ -28,6 +28,17 @@
   --safe-area-right: env(safe-area-inset-right, 0px);
 }
 
+html.dark {
+  --bg-alabaster: #111110;
+  --bg-surface: #1A1917;
+  --border-pearl: #2E2C28;
+  --text-ink: #F4F1EA;
+  --text-slate: #A8A39A;
+  --accent-champagne: #C8A86B;
+  --accent-carmine: #B82530;
+  color-scheme: dark;
+}
+
 @layer base {
   *, *::before, *::after {
     box-sizing: border-box;
@@ -36,8 +47,8 @@
 
   html {
     scroll-behavior: smooth;
-    background-color: #FAF9F6;
-    color: #141413;
+    background-color: var(--bg-alabaster);
+    color: var(--text-ink);
     font-family: var(--font-sans);
     font-size: 16px;
     line-height: 1.5;
@@ -48,11 +59,12 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     touch-action: manipulation;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   body {
-    background-color: #FAF9F6;
-    color: #141413;
+    background-color: var(--bg-alabaster);
+    color: var(--text-ink);
     font-size: 1rem;
     line-height: 1.5;
     width: 100%;
@@ -62,6 +74,7 @@
     padding-left: var(--safe-area-left);
     padding-right: var(--safe-area-right);
     touch-action: manipulation;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   /* Eliminate 300ms click delay and tap flash on all interactive controls */
@@ -102,6 +115,84 @@
     background-color: #9E1B24;
     color: #FAF9F6;
   }
+}
+
+/* ==========================================================================
+   MODE OBSCUR ("SALON ÉTOILÉ NOCTURNE") — PALETTE OVERRIDES
+   ========================================================================== */
+html.dark .bg-\[\#FAF9F6\] {
+  background-color: #111110 !important;
+}
+
+html.dark .bg-\[\#FAF9F6\]\/95,
+html.dark .bg-\[\#FAF9F6\]\/94,
+html.dark .bg-\[\#FAF9F6\]\/90 {
+  background-color: rgba(17, 17, 16, 0.94) !important;
+}
+
+html.dark .bg-white {
+  background-color: #1A1917 !important;
+}
+
+html.dark .bg-white\/95,
+html.dark .bg-white\/90,
+html.dark .bg-white\/70,
+html.dark .bg-white\/60 {
+  background-color: rgba(26, 25, 23, 0.92) !important;
+}
+
+html.dark .bg-\[\#F3F1EC\] {
+  background-color: #22211E !important;
+}
+
+html.dark .text-\[\#141413\] {
+  color: #F4F1EA !important;
+}
+
+html.dark .text-\[\#5C5B57\] {
+  color: #A8A39A !important;
+}
+
+html.dark .placeholder\:text-\[\#5C5B57\]\/60::placeholder,
+html.dark .placeholder\:text-\[\#5C5B57\]\/65::placeholder {
+  color: rgba(168, 163, 154, 0.65) !important;
+}
+
+html.dark .border-\[\#E5E2DC\] {
+  border-color: #2E2C28 !important;
+}
+
+html.dark .divide-\[\#E5E2DC\] > :not([hidden]) ~ :not([hidden]) {
+  border-color: #2E2C28 !important;
+}
+
+/* Active dark buttons (bg-[#141413] text-[#FAF9F6]) become Champagne Gold / Warm Ivory in Dark Mode */
+html.dark button.bg-\[\#141413\],
+html.dark a.bg-\[\#141413\] {
+  background-color: #2A2722 !important;
+  color: #F4F1EA !important;
+  border-color: #B89758 !important;
+}
+
+html.dark button.bg-\[\#141413\]:hover,
+html.dark a.bg-\[\#141413\]:hover {
+  background-color: #9E1B24 !important;
+  color: #FAF9F6 !important;
+  border-color: #9E1B24 !important;
+}
+
+/* World map SVG adaptation in Dark Mode */
+html.dark svg g[fill="#E2DDD4"] {
+  fill: #2D2B26;
+  stroke: #46423A;
+}
+
+html.dark svg path[fill="#D5CFC3"] {
+  fill: #3A3730;
+}
+
+html.dark svg g[stroke="#E5E2DC"] {
+  stroke: #2A2824;
 }
 
 .tabular-nums {
@@ -190,12 +281,16 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #FAF9F6;
+  background: var(--bg-alabaster);
 }
 
 ::-webkit-scrollbar-thumb {
   background: #D8D3C8;
   border-radius: 3px;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: #3A3731;
 }
 
 ::-webkit-scrollbar-thumb:hover {

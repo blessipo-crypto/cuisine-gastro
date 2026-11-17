@@ -20,6 +20,7 @@ import { MichelinStarIcon } from './components/MichelinStars';
 
 const STORAGE_KEY = 'atlas_chefs_etoiles_carnet_v1';
 const SHOPPING_STORAGE_KEY = 'atlas_chefs_etoiles_shopping_v1';
+const THEME_STORAGE_KEY = 'atlas_chefs_etoiles_theme_v1';
 const ITEMS_PER_PAGE = 9;
 
 const DEFAULT_SHOPPING_ITEMS: ShoppingListItem[] = [
@@ -73,6 +74,14 @@ export default function App() {
   const [isCarnetOpen, setIsCarnetOpen] = useState(false);
   const [isShoppingOpen, setIsShoppingOpen] = useState(false);
   const [mobileNavTab, setMobileNavTab] = useState<MobileNavTab>('home');
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem(THEME_STORAGE_KEY) === 'dark';
+    } catch {
+      return false;
+    }
+  });
 
   // Refs for the 5-panel horizontal CSS Scroll-Snap swipe container and individual vertical panels
   const mainSwipeRef = useRef<HTMLDivElement>(null);
@@ -114,6 +123,25 @@ export default function App() {
     }
   }, [shoppingItems]);
 
+  // Apply Dark Mode class on <html> and update Android <meta name="theme-color">
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isDarkMode) {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    if (metaTheme) {
+      metaTheme.setAttribute('content', isDarkMode ? '#111110' : '#FAF9F6');
+    }
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, isDarkMode ? 'dark' : 'light');
+    } catch {
+      // Ignore storage errors
+    }
+  }, [isDarkMode]);
+
   // Reset pagination whenever filters, search, or sort change
   useEffect(() => {
     setCurrentPage(1);
@@ -148,6 +176,57 @@ export default function App() {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, [activeSection]);
+
+  // Synchronize isFullscreen with native Fullscreen API events (e.g., Escape key or Android back gesture)
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      const doc = document as Document & { webkitFullscreenElement?: Element | null };
+      const nativeFsActive = Boolean(doc.fullscreenElement || doc.webkitFullscreenElement);
+      setIsFullscreen(nativeFsActive);
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
+    };
+  }, []);
+
+  const handleToggleFullscreen = async () => {
+    const doc = document as Document & {
+      webkitFullscreenElement?: Element | null;
+      webkitExitFullscreen?: () => Promise<void> | void;
+    };
+    const docEl = document.documentElement as HTMLElement & {
+      webkitRequestFullscreen?: () => Promise<void> | void;
+    };
+
+    const nextState = !isFullscreen;
+    setIsFullscreen(nextState);
+
+    try {
+      if (nextState) {
+        if (!doc.fullscreenElement && !doc.webkitFullscreenElement) {
+          if (docEl.requestFullscreen) {
+            await docEl.requestFullscreen();
+          } else if (docEl.webkitRequestFullscreen) {
+            await docEl.webkitRequestFullscreen();
+          }
+        }
+      } else {
+        if (doc.fullscreenElement || doc.webkitFullscreenElement) {
+          if (doc.exitFullscreen) {
+            await doc.exitFullscreen();
+          } else if (doc.webkitExitFullscreen) {
+            await doc.webkitExitFullscreen();
+          }
+        }
+      }
+    } catch {
+      // If native Fullscreen API is blocked by an iframe/WebView policy, keep the UI immersive state active
+    }
+  };
 
   const toggleSaveChef = (chefId: string) => {
     setSavedChefIds((prev) =>
@@ -532,6 +611,10 @@ export default function App() {
         onSelectSection={handleSelectSection}
         savedCount={savedChefs.length}
         shoppingCount={shoppingItems.length}
+        isDarkMode={isDarkMode}
+        onToggleDarkMode={() => setIsDarkMode((prev) => !prev)}
+        isFullscreen={isFullscreen}
+        onToggleFullscreen={handleToggleFullscreen}
         onOpenCarnet={() => {
           setIsShoppingOpen(false);
           setIsCarnetOpen(true);
@@ -560,50 +643,73 @@ export default function App() {
           aria-label="Chefs et Maisons Étoilées"
           className="swipe-tab-panel h-full pb-safe-bottom-nav"
         >
-          <HeroSection
-            totalChefs={ALL_CHEFS_DATA.length}
-            totalStars={totalStars}
-            totalLocations={departments.length}
-            totalGalleryImages={totalGalleryImages}
-            onSelectSection={handleSelectSection}
-            onOpenFeaturedChef={() => {
-              const pic =
-                ALL_CHEFS_DATA.find((c) => c.id === 'anne-sophie-pic') || ALL_CHEFS_DATA[0];
-              handleOpenChef(pic, 'bio');
-            }}
-          />
-
-          <div className="max-w-[1340px] mx-auto px-4 sm:px-8 lg:px-12 py-8 sm:py-10 lg:py-12 space-y-10">
-            <SearchAndIndexBar
-              activeSearchTab={activeSearchTab}
-              onSearchTabChange={setActiveSearchTab}
-              searchQuery={searchQuery}
-              onSearchChange={setSearchQuery}
-              selectedCity={selectedCity}
-              onCityChange={setSelectedCity}
-              cities={cities}
-              selectedDepartment={selectedDepartment}
-              onDepartmentChange={setSelectedDepartment}
-              departments={departments}
-              selectedRegion={selectedRegion}
-              onRegionChange={setSelectedRegion}
-              regionCounts={regionCounts}
-              selectedStars={selectedStars}
-              onStarsChange={setSelectedStars}
-              selectedGreenStar={selectedGreenStar}
-              onGreenStarChange={setSelectedGreenStar}
-              selectedZone={selectedZone}
-              onZoneChange={setSelectedZone}
-              selectedCuisine={selectedCuisine}
-              onCuisineChange={setSelectedCuisine}
-              selectedSpecialty={selectedSpecialty}
-              onSpecialtyChange={setSelectedSpecialty}
-              topSpecialties={topSpecialties}
-              cuisineCounts={cuisineCounts}
-              resultCount={filteredChefs.length}
-              totalCount={ALL_CHEFS_DATA.length}
-              onResetFilters={handleResetFilters}
+          {/* In Fullscreen mode, hide HeroSection and SearchAndIndexBar to maximize reading space */}
+          {!isFullscreen && (
+            <HeroSection
+              totalChefs={ALL_CHEFS_DATA.length}
+              totalStars={totalStars}
+              totalLocations={departments.length}
+              totalGalleryImages={totalGalleryImages}
+              onSelectSection={handleSelectSection}
+              onOpenFeaturedChef={() => {
+                const pic =
+                  ALL_CHEFS_DATA.find((c) => c.id === 'anne-sophie-pic') || ALL_CHEFS_DATA[0];
+                handleOpenChef(pic, 'bio');
+              }}
             />
+          )}
+
+          <div
+            className={`max-w-[1340px] mx-auto px-4 sm:px-8 lg:px-12 ${
+              isFullscreen ? 'py-5 sm:py-7 space-y-6' : 'py-8 sm:py-10 lg:py-12 space-y-10'
+            }`}
+          >
+            {isFullscreen ? (
+              <div className="p-3.5 sm:px-6 bg-white border border-[#E5E2DC] flex flex-wrap items-center justify-between gap-3">
+                <p className="text-xs uppercase tracking-[0.16em] text-[#5C5B57]">
+                  <span className="text-[#9E1B24] font-semibold">Mode Plein Écran actif</span> ·
+                  Barre de recherche masquée pour maximiser la zone de lecture
+                </p>
+                <button
+                  type="button"
+                  onClick={handleToggleFullscreen}
+                  className="min-h-[48px] px-4 py-2 text-xs uppercase tracking-[0.14em] font-medium bg-[#FAF9F6] hover:bg-[#141413] hover:text-[#FAF9F6] text-[#141413] border border-[#E5E2DC] transition-colors cursor-pointer"
+                >
+                  Afficher la recherche / Quitter
+                </button>
+              </div>
+            ) : (
+              <SearchAndIndexBar
+                activeSearchTab={activeSearchTab}
+                onSearchTabChange={setActiveSearchTab}
+                searchQuery={searchQuery}
+                onSearchChange={setSearchQuery}
+                selectedCity={selectedCity}
+                onCityChange={setSelectedCity}
+                cities={cities}
+                selectedDepartment={selectedDepartment}
+                onDepartmentChange={setSelectedDepartment}
+                departments={departments}
+                selectedRegion={selectedRegion}
+                onRegionChange={setSelectedRegion}
+                regionCounts={regionCounts}
+                selectedStars={selectedStars}
+                onStarsChange={setSelectedStars}
+                selectedGreenStar={selectedGreenStar}
+                onGreenStarChange={setSelectedGreenStar}
+                selectedZone={selectedZone}
+                onZoneChange={setSelectedZone}
+                selectedCuisine={selectedCuisine}
+                onCuisineChange={setSelectedCuisine}
+                selectedSpecialty={selectedSpecialty}
+                onSpecialtyChange={setSelectedSpecialty}
+                topSpecialties={topSpecialties}
+                cuisineCounts={cuisineCounts}
+                resultCount={filteredChefs.length}
+                totalCount={ALL_CHEFS_DATA.length}
+                onResetFilters={handleResetFilters}
+              />
+            )}
 
             {/* Results Directory Header, View Switcher & Sort Controls */}
             <section
@@ -875,6 +981,10 @@ export default function App() {
         chef={activeChef}
         initialTab={modalTab}
         isSaved={activeChef ? savedChefIds.includes(activeChef.id) : false}
+        isDarkMode={isDarkMode}
+        onToggleDarkMode={() => setIsDarkMode((prev) => !prev)}
+        isFullscreen={isFullscreen}
+        onToggleFullscreen={handleToggleFullscreen}
         shoppingItems={shoppingItems}
         onToggleSave={toggleSaveChef}
         onAddIngredientToShopping={handleAddIngredientToShopping}
