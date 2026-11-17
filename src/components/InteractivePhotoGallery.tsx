@@ -56,13 +56,13 @@ export const InteractivePhotoGallery: React.FC<InteractivePhotoGalleryProps> = (
   };
 
   return (
-    <div className="space-y-4">
-      {/* Main Interactive Gallery Viewport */}
-      <div className="relative bg-[#EBE6DF] border border-stone-200 rounded-lg overflow-hidden">
+    <div className="space-y-5">
+      {/* Main Interactive Gallery Viewport (Strict 16:9 Dish Aspect Ratio) */}
+      <div className="relative bg-[#F3F1EC] border border-[#E5E2DC] overflow-hidden">
         <div
           onMouseMove={handleMouseMove}
           onClick={() => setIsZoomed((z) => !z)}
-          className={`relative aspect-[16/10] sm:aspect-[16/9] overflow-hidden select-none ${
+          className={`relative aspect-[16/9] overflow-hidden select-none ${
             isZoomed ? 'cursor-zoom-out' : 'cursor-zoom-in'
           }`}
         >
@@ -70,34 +70,34 @@ export const InteractivePhotoGallery: React.FC<InteractivePhotoGalleryProps> = (
             src={currentPhoto.url}
             alt={`${currentPhoto.title} — ${dishTitle}`}
             fallbackTitle={currentPhoto.title}
-            className="w-full h-full object-cover transition-transform duration-200 ease-out"
+            className="w-full h-full object-cover transition-transform duration-300 ease-out"
             style={{
               transform: isZoomed ? 'scale(1.85)' : 'scale(1)',
               transformOrigin: `${panOrigin.x}% ${panOrigin.y}%`,
             }}
           />
 
-          <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/75 via-black/30 to-transparent pointer-events-none" />
+          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#141413]/85 via-[#141413]/30 to-transparent pointer-events-none" />
 
-          {/* Gallery Toolbar Controls */}
+          {/* Gallery Toolbar Controls (48px+ touch targets) */}
           <div
-            className="absolute top-3 right-3 flex items-center gap-2"
+            className="absolute top-3.5 right-3.5 flex items-center gap-2"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               type="button"
               onClick={() => setIsZoomed((z) => !z)}
               aria-label={isZoomed ? 'Désactiver le zoom' : 'Inspecter en détail'}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-stone-900/80 hover:bg-stone-900 text-[#FBF9F5] text-xs font-medium transition-colors cursor-pointer"
+              className="min-h-[48px] min-w-[48px] inline-flex items-center justify-center gap-1.5 px-3.5 py-2 bg-[#141413]/80 hover:bg-[#141413] text-[#FAF9F6] text-[11px] uppercase tracking-[0.14em] font-medium border border-white/15 transition-colors cursor-pointer"
             >
               {isZoomed ? (
                 <>
-                  <ZoomOut className="w-3.5 h-3.5" aria-hidden="true" />
+                  <ZoomOut className="w-4 h-4 text-[#B89758]" strokeWidth={1.35} aria-hidden="true" />
                   <span>1×</span>
                 </>
               ) : (
                 <>
-                  <ZoomIn className="w-3.5 h-3.5" aria-hidden="true" />
+                  <ZoomIn className="w-4 h-4 text-[#B89758]" strokeWidth={1.35} aria-hidden="true" />
                   <span>Inspecter</span>
                 </>
               )}
@@ -107,18 +107,16 @@ export const InteractivePhotoGallery: React.FC<InteractivePhotoGalleryProps> = (
               type="button"
               onClick={() => setIsLightboxOpen(true)}
               aria-label="Agrandir la galerie en plein écran"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-stone-900/80 hover:bg-[#991B1B] text-[#FBF9F5] text-xs font-medium transition-colors cursor-pointer"
+              className="min-h-[48px] min-w-[48px] inline-flex items-center justify-center gap-1.5 px-3.5 py-2 bg-[#141413]/80 hover:bg-[#9E1B24] text-[#FAF9F6] text-[11px] uppercase tracking-[0.14em] font-medium border border-white/15 transition-colors cursor-pointer"
             >
-              <Maximize2 className="w-3.5 h-3.5" aria-hidden="true" />
+              <Maximize2 className="w-4 h-4 text-[#B89758]" strokeWidth={1.35} aria-hidden="true" />
               <span className="hidden sm:inline">Plein écran</span>
             </button>
           </div>
 
-          {/* Left / Right Navigation Arrows */}
+          {/* Left / Right Navigation Arrows (48x48px touch targets) */}
           {photos.length > 1 && (
-            <div
-              className="absolute inset-y-0 left-0 right-0 flex items-center justify-between px-3 pointer-events-none"
-            >
+            <div className="absolute inset-y-0 left-0 right-0 flex items-center justify-between px-3 sm:px-4 pointer-events-none">
               <button
                 type="button"
                 onClick={(e) => {
@@ -126,9 +124,9 @@ export const InteractivePhotoGallery: React.FC<InteractivePhotoGalleryProps> = (
                   handlePrev();
                 }}
                 aria-label="Photo précédente"
-                className="pointer-events-auto w-10 h-10 rounded-md bg-stone-900/75 hover:bg-stone-900 text-white flex items-center justify-center transition-colors cursor-pointer"
+                className="pointer-events-auto min-w-[48px] min-h-[48px] bg-[#141413]/75 hover:bg-[#141413] text-[#FAF9F6] border border-white/15 flex items-center justify-center transition-colors cursor-pointer"
               >
-                <ChevronLeft className="w-5 h-5" aria-hidden="true" />
+                <ChevronLeft className="w-5 h-5" strokeWidth={1.35} aria-hidden="true" />
               </button>
               <button
                 type="button"
@@ -137,42 +135,46 @@ export const InteractivePhotoGallery: React.FC<InteractivePhotoGalleryProps> = (
                   handleNext();
                 }}
                 aria-label="Photo suivante"
-                className="pointer-events-auto w-10 h-10 rounded-md bg-stone-900/75 hover:bg-stone-900 text-white flex items-center justify-center transition-colors cursor-pointer"
+                className="pointer-events-auto min-w-[48px] min-h-[48px] bg-[#141413]/75 hover:bg-[#141413] text-[#FAF9F6] border border-white/15 flex items-center justify-center transition-colors cursor-pointer"
               >
-                <ChevronRight className="w-5 h-5" aria-hidden="true" />
+                <ChevronRight className="w-5 h-5" strokeWidth={1.35} aria-hidden="true" />
               </button>
             </div>
           )}
 
           {/* Bottom Scrim Metadata */}
-          <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5 text-[#FBF9F5] flex flex-col sm:flex-row sm:items-end justify-between gap-2 pointer-events-none">
+          <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 text-[#FAF9F6] flex flex-col sm:flex-row sm:items-end justify-between gap-2 pointer-events-none">
             <div>
-              <p className="font-mono text-[11px] uppercase tracking-widest text-stone-300">
+              <p className="text-[10px] uppercase tracking-[0.2em] text-[#B89758]">
                 {currentPhoto.angle} · {currentPhoto.focalNote}
               </p>
-              <p className="font-serif text-lg sm:text-xl font-medium mt-0.5">
+              <p className="font-serif text-xl sm:text-2xl font-normal mt-0.5">
                 {currentPhoto.title}
               </p>
             </div>
-            <span className="font-mono text-xs text-stone-200 tabular-nums shrink-0">
-              Planche {activeIndex + 1} / {photos.length}
+            <span className="font-mono text-xs text-[#E5E2DC] tabular-nums shrink-0">
+              Planche 0{activeIndex + 1} / 0{photos.length}
             </span>
           </div>
         </div>
 
         {/* Archival Figure Caption Bar */}
-        <div className="px-5 py-3.5 bg-[#FBF9F5] border-t border-stone-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <p className="font-serif italic text-sm text-stone-700">
+        <div className="px-5 sm:px-6 py-4 bg-white border-t border-[#E5E2DC] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <p className="font-serif italic text-base sm:text-lg text-[#141413]">
             {currentPhoto.caption}
           </p>
-          <span className="font-mono text-[11px] text-stone-500 whitespace-nowrap shrink-0">
-            {isZoomed ? 'Déplacez le curseur pour explorer la texture' : 'Cliquez sur l’image pour zoomer'}
+          <span className="text-[11px] uppercase tracking-[0.14em] text-[#5C5B57] whitespace-nowrap shrink-0">
+            {isZoomed ? 'Déplacez pour explorer la matière' : 'Touchez l’image pour zoomer'}
           </span>
         </div>
       </div>
 
-      {/* Interactive Thumbnail Selector Strip */}
-      <div className="grid grid-cols-4 gap-3" role="tablist" aria-label="Miniatures du plat emblématique">
+      {/* Interactive Thumbnail Selector Strip (Strict 4:3 Dish Ratio & 8px+ gap) */}
+      <div
+        className="grid grid-cols-2 sm:grid-cols-4 gap-3"
+        role="tablist"
+        aria-label="Miniatures du plat emblématique"
+      >
         {photos.map((photo, idx) => {
           const isActive = idx === activeIndex;
           return (
@@ -185,24 +187,24 @@ export const InteractivePhotoGallery: React.FC<InteractivePhotoGalleryProps> = (
                 setIsZoomed(false);
                 setActiveIndex(idx);
               }}
-              className={`group text-left rounded-md overflow-hidden border transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#991B1B] ${
+              className={`min-h-[48px] group text-left overflow-hidden border transition-all duration-300 cursor-pointer focus-visible:outline-none ${
                 isActive
-                  ? 'border-[#991B1B] ring-1 ring-[#991B1B]'
-                  : 'border-stone-200 opacity-75 hover:opacity-100 hover:border-stone-400'
+                  ? 'border-[#B89758] ring-1 ring-[#B89758]'
+                  : 'border-[#E5E2DC] opacity-75 hover:opacity-100 hover:border-[#B89758]/60'
               }`}
             >
-              <div className="aspect-[4/3] bg-stone-200 overflow-hidden">
+              <div className="aspect-[4/3] bg-[#F3F1EC] overflow-hidden">
                 <ResilientImage
                   src={photo.url}
                   alt={photo.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
-              <div className="px-2.5 py-2 bg-white">
-                <p className="font-mono text-[10px] text-stone-400 tabular-nums">
-                  Fig. 0{idx + 1}
+              <div className="px-3 py-2.5 bg-white">
+                <p className="font-mono text-[10px] text-[#B89758] tabular-nums">
+                  Planche 0{idx + 1}
                 </p>
-                <p className="text-xs font-medium text-stone-800 truncate">
+                <p className="text-xs font-medium text-[#141413] truncate mt-0.5">
                   {photo.title}
                 </p>
               </div>
@@ -214,17 +216,21 @@ export const InteractivePhotoGallery: React.FC<InteractivePhotoGalleryProps> = (
       {/* Fullscreen Lightbox Modal */}
       {isLightboxOpen && (
         <div
-          className="fixed inset-0 z-[70] bg-stone-950/95 flex flex-col justify-between p-4 sm:p-8"
+          style={{
+            paddingTop: 'max(1.25rem, env(safe-area-inset-top, 0px))',
+            paddingBottom: 'max(1.25rem, env(safe-area-inset-bottom, 0px))',
+          }}
+          className="fixed inset-0 z-[70] bg-[#141413]/96 flex flex-col justify-between p-4 sm:p-10 overscroll-contain"
           role="dialog"
           aria-modal="true"
           aria-label={`Galerie plein écran : ${dishTitle}`}
         >
-          <div className="flex items-center justify-between text-stone-200 border-b border-stone-800 pb-4">
+          <div className="flex items-center justify-between text-[#FAF9F6] border-b border-white/15 pb-4">
             <div>
-              <p className="font-mono text-xs uppercase tracking-widest text-stone-400">
-                {chefName} · Plat Emblématique
+              <p className="text-[11px] uppercase tracking-[0.2em] text-[#B89758]">
+                {chefName} · Création Signature
               </p>
-              <h3 className="font-serif text-xl sm:text-2xl text-white mt-0.5">
+              <h3 className="font-serif text-2xl sm:text-3xl text-[#FAF9F6] mt-0.5">
                 {dishTitle}
               </h3>
             </div>
@@ -232,9 +238,9 @@ export const InteractivePhotoGallery: React.FC<InteractivePhotoGalleryProps> = (
               type="button"
               onClick={() => setIsLightboxOpen(false)}
               aria-label="Fermer le plein écran"
-              className="w-10 h-10 rounded-md bg-stone-800 hover:bg-[#991B1B] text-white flex items-center justify-center transition-colors cursor-pointer"
+              className="min-w-[48px] min-h-[48px] border border-white/20 hover:bg-[#9E1B24] text-[#FAF9F6] flex items-center justify-center transition-colors cursor-pointer"
             >
-              <X className="w-5 h-5" aria-hidden="true" />
+              <X className="w-5 h-5" strokeWidth={1.35} aria-hidden="true" />
             </button>
           </div>
 
@@ -243,33 +249,33 @@ export const InteractivePhotoGallery: React.FC<InteractivePhotoGalleryProps> = (
               type="button"
               onClick={handlePrev}
               aria-label="Image précédente"
-              className="absolute left-2 sm:left-4 z-10 w-11 h-11 rounded-md bg-stone-900/80 hover:bg-[#991B1B] text-white flex items-center justify-center transition-colors cursor-pointer"
+              className="absolute left-2 sm:left-4 z-10 min-w-[48px] min-h-[48px] bg-[#141413]/80 hover:bg-[#9E1B24] border border-white/20 text-[#FAF9F6] flex items-center justify-center transition-colors cursor-pointer"
             >
-              <ChevronLeft className="w-6 h-6" aria-hidden="true" />
+              <ChevronLeft className="w-6 h-6" strokeWidth={1.35} aria-hidden="true" />
             </button>
 
             <ResilientImage
               src={currentPhoto.url}
               alt={currentPhoto.title}
-              className="max-h-[72vh] max-w-full object-contain rounded"
+              className="w-full max-w-4xl aspect-[16/9] max-h-[72dvh] object-cover"
             />
 
             <button
               type="button"
               onClick={handleNext}
               aria-label="Image suivante"
-              className="absolute right-2 sm:right-4 z-10 w-11 h-11 rounded-md bg-stone-900/80 hover:bg-[#991B1B] text-white flex items-center justify-center transition-colors cursor-pointer"
+              className="absolute right-2 sm:right-4 z-10 min-w-[48px] min-h-[48px] bg-[#141413]/80 hover:bg-[#9E1B24] border border-white/20 text-[#FAF9F6] flex items-center justify-center transition-colors cursor-pointer"
             >
-              <ChevronRight className="w-6 h-6" aria-hidden="true" />
+              <ChevronRight className="w-6 h-6" strokeWidth={1.35} aria-hidden="true" />
             </button>
           </div>
 
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-stone-800 pt-4 text-stone-300">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-white/15 pt-4 text-[#E5E2DC]">
             <div>
-              <p className="font-serif italic text-base text-white">
+              <p className="font-serif italic text-lg text-[#FAF9F6]">
                 {currentPhoto.caption}
               </p>
-              <p className="font-mono text-xs text-stone-400 mt-1">
+              <p className="text-[11px] uppercase tracking-[0.16em] text-[#B89758] mt-1">
                 {currentPhoto.angle} · {currentPhoto.focalNote}
               </p>
             </div>
@@ -279,10 +285,10 @@ export const InteractivePhotoGallery: React.FC<InteractivePhotoGalleryProps> = (
                   key={p.id}
                   type="button"
                   onClick={() => setActiveIndex(i)}
-                  className={`px-2.5 py-1 text-xs font-mono rounded cursor-pointer transition-colors ${
+                  className={`min-w-[48px] min-h-[48px] px-3 py-1.5 text-xs font-mono border cursor-pointer transition-colors ${
                     i === activeIndex
-                      ? 'bg-[#991B1B] text-white'
-                      : 'bg-stone-800 text-stone-300 hover:bg-stone-700'
+                      ? 'bg-[#B89758] text-[#141413] border-[#B89758]'
+                      : 'bg-transparent text-[#E5E2DC] border-white/20 hover:border-white/50'
                   }`}
                 >
                   0{i + 1}

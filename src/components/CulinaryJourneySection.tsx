@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Chef } from '../types/chef';
+import { MichelinStars } from './MichelinStars';
 
 interface CulinaryJourneySectionProps {
   chefs: Chef[];
@@ -11,7 +12,6 @@ export const CulinaryJourneySection: React.FC<CulinaryJourneySectionProps> = ({
   chefs,
   onSelectChef,
 }) => {
-  // Sort chefs chronologically by their landmark starYear for historical perspective
   const chronologicalChefs = [...chefs]
     .sort((a, b) => a.starYear - b.starYear)
     .slice(0, 8);
@@ -20,49 +20,54 @@ export const CulinaryJourneySection: React.FC<CulinaryJourneySectionProps> = ({
     <section
       id="chronologie"
       aria-label="Chronologie des parcours gastronomiques et distinctions"
-      className="py-14 lg:py-20 border-t border-stone-200 bg-[#F3EFE7]/55"
+      className="py-20 lg:py-28 border-t border-[#E5E2DC] bg-white"
     >
-      <div className="max-w-[1280px] mx-auto px-6 lg:px-10">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-8 border-b border-stone-200">
+      <div className="max-w-[1340px] mx-auto px-5 sm:px-8 lg:px-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-10 border-b border-[#E5E2DC]">
           <div>
-            <p className="font-mono text-xs uppercase tracking-widest text-[#991B1B]">
-              Chronologie & Transmission
+            <p className="text-[11px] uppercase tracking-[0.22em] font-medium text-[#B89758]">
+              Palmarès Historique & Filiation
             </p>
-            <h2 className="font-serif text-3xl lg:text-4xl font-semibold text-stone-900 mt-1 text-balance">
-              Années d’Obtention & Grandes Lignes des Parcours
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#141413] mt-2 text-balance">
+              Années de Consécration & Transmission
             </h2>
           </div>
-          <p className="text-sm text-stone-600 max-w-md">
-            De l’Alsace de 1967 aux tables végétales et nordiques contemporaines, explorez les dates
-            charnières de la constellation Michelin.
+          <p className="text-sm text-[#5C5B57] max-w-md leading-relaxed">
+            De l’Auberge de l’Ill en 1967 aux tables végétales et nordiques contemporaines,
+            parcourez les dates jalons de la haute gastronomie mondiale.
           </p>
         </div>
 
-        <div className="mt-8 bg-white border border-stone-200 rounded-lg divide-y divide-stone-200">
+        <div className="mt-10 bg-[#FAF9F6] border border-[#E5E2DC] divide-y divide-[#E5E2DC]">
           {chronologicalChefs.map((chef) => (
             <div
               key={chef.id}
-              className="p-5 sm:px-7 grid grid-cols-1 md:grid-cols-12 gap-4 items-center hover:bg-[#FBF9F5] transition-colors"
+              className="p-6 sm:px-8 grid grid-cols-1 md:grid-cols-12 gap-5 items-center hover:bg-white transition-colors duration-300"
             >
-              <div className="md:col-span-2 flex items-baseline gap-3">
-                <span className="font-mono text-xl font-semibold text-[#991B1B] tabular-nums">
+              <div className="md:col-span-2 flex items-center gap-4">
+                <span className="font-serif text-3xl font-medium text-[#141413] tabular-nums">
                   {chef.starYear}
                 </span>
-                <span className="font-mono text-xs text-stone-500 tabular-nums">
-                  {'★'.repeat(chef.stars)}
-                </span>
+                <MichelinStars
+                  stars={chef.stars}
+                  greenStar={chef.greenStar}
+                  size="xs"
+                  variant="carmine"
+                />
               </div>
 
               <div className="md:col-span-3">
-                <p className="font-serif text-xl font-semibold text-stone-900">{chef.name}</p>
-                <p className="text-xs text-stone-500">
-                  {chef.restaurant} · {chef.city} ({chef.departmentCode})
+                <p className="font-serif text-2xl font-medium text-[#141413]">{chef.name}</p>
+                <p className="font-serif italic text-base text-[#5C5B57]">
+                  {chef.restaurant} · <span className="not-italic font-sans text-xs">{chef.city} ({chef.departmentCode})</span>
                 </p>
               </div>
 
               <div className="md:col-span-5">
-                <p className="text-xs font-medium text-stone-800">{chef.cuisineType}</p>
-                <p className="text-xs text-stone-600 mt-0.5 line-clamp-2">
+                <p className="text-[11px] uppercase tracking-[0.16em] font-medium text-[#B89758]">
+                  {chef.cuisineType}
+                </p>
+                <p className="text-base text-[#5C5B57] mt-1 line-clamp-2 leading-[1.5]">
                   {chef.culinaryJourney[chef.culinaryJourney.length - 1]?.description}
                 </p>
               </div>
@@ -71,10 +76,14 @@ export const CulinaryJourneySection: React.FC<CulinaryJourneySectionProps> = ({
                 <button
                   type="button"
                   onClick={() => onSelectChef(chef)}
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-stone-900 hover:text-[#991B1B] transition-colors cursor-pointer whitespace-nowrap shrink-0"
+                  className="min-h-[48px] px-3 group inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.16em] font-medium text-[#141413] hover:text-[#9E1B24] transition-colors cursor-pointer whitespace-nowrap shrink-0"
                 >
-                  <span>Lire le parcours</span>
-                  <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                  <span>Lire le Parcours</span>
+                  <ArrowRight
+                    className="w-3.5 h-3.5 text-[#B89758] transition-transform duration-300 group-hover:translate-x-1"
+                    strokeWidth={1.35}
+                    aria-hidden="true"
+                  />
                 </button>
               </div>
             </div>

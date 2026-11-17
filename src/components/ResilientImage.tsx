@@ -21,12 +21,12 @@ export const ResilientImage: React.FC<ResilientImageProps> = ({
   if (hasError) {
     return (
       <div
-        className={`flex flex-col items-center justify-center bg-[#EBE6DF] text-stone-600 p-6 text-center ${className}`}
+        className={`flex flex-col items-center justify-center bg-[#F3F1EC] text-[#5C5B57] p-6 text-center ${className}`}
         role="img"
         aria-label={alt}
       >
-        <Utensils className="w-6 h-6 text-stone-500 mb-2" aria-hidden="true" />
-        <span className="font-serif italic text-sm text-stone-700 max-w-xs">
+        <Utensils className="w-6 h-6 text-[#B89758] mb-2" strokeWidth={1.35} aria-hidden="true" />
+        <span className="font-serif italic text-base text-[#141413] max-w-xs">
           {fallbackTitle || alt}
         </span>
       </div>
@@ -39,9 +39,10 @@ export const ResilientImage: React.FC<ResilientImageProps> = ({
       alt={alt}
       referrerPolicy="no-referrer"
       onError={() => setHasError(true)}
-      className={className}
+      className={`object-cover ${className}`}
       style={style}
       loading="lazy"
+      decoding="async"
     />
   );
 };
