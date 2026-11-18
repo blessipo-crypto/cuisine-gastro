@@ -262,7 +262,7 @@ export const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({
                 </div>
               </div>
 
-              {/* OPTION 3: COMPLETE ANDROID APK PROJECT ZIP (with COMPILER_APK_ANDROID.bat) */}
+              {/* OPTION 3: COMPLETE ANDROID APK PROJECT ZIP + GITHUB ACTIONS WORKFLOW */}
               <div className="p-4 sm:p-5 bg-white border border-[#E5E2DC] space-y-3">
                 <div className="flex items-start gap-3.5">
                   <Package
@@ -272,14 +272,18 @@ export const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({
                   />
                   <div className="flex-1">
                     <p className="font-semibold text-[#141413]">
-                      3. Pack Projet Android `.APK` Complet (`COMPILER_APK_ANDROID.bat`)
+                      3. Pack Projet Android `.APK` + Workflow GitHub Actions (`build-apk.yml`)
                     </p>
                     <p className="text-sm text-[#5C5B57] mt-1 leading-relaxed">
                       Archive ZIP contenant le projet natif Android Capacitor (
-                      <code className="font-mono text-xs">android/</code>) et le script{' '}
-                      <code className="font-mono text-xs">COMPILER_APK_ANDROID.bat</code> qui
-                      génère automatiquement le fichier{' '}
-                      <code className="font-mono text-xs">app-debug.apk</code> sur votre PC.
+                      <code className="font-mono text-xs">android/</code>), le script{' '}
+                      <code className="font-mono text-xs">COMPILER_APK_ANDROID.bat</code> et le
+                      workflow automatique GitHub Actions{' '}
+                      <code className="font-mono text-xs">.github/workflows/build-apk.yml</code>{' '}
+                      qui compile et publie l’artefact{' '}
+                      <code className="font-mono text-xs">appli-cuisine-apk</code> (
+                      <code className="font-mono text-xs">app-debug.apk</code>) dans le Cloud sans
+                      installer Android Studio.
                     </p>
                     <div className="mt-3 flex flex-wrap items-center gap-2">
                       <button
@@ -297,8 +301,20 @@ export const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({
                         <span>
                           {downloadingFile === 'atlas-chefs-projet-complet-apk.zip'
                             ? 'Téléchargement...'
-                            : 'Télécharger le Projet Android APK (.ZIP)'}
+                            : 'Télécharger Projet + GitHub Action (.ZIP)'}
                         </span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() =>
+                          triggerFileDownload('/downloads/build-apk.yml', 'build-apk.yml')
+                        }
+                        disabled={downloadingFile !== null}
+                        className="min-h-[48px] px-3.5 py-2 inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.12em] font-medium bg-[#FAF9F6] border border-[#E5E2DC] hover:border-[#B89758] text-[#141413] cursor-pointer"
+                      >
+                        <FileCode2 className="w-3.5 h-3.5 text-[#9E1B24]" />
+                        <span>Télécharger build-apk.yml</span>
                       </button>
 
                       <button

@@ -87,7 +87,7 @@ define(['./workbox-afac4cd2'], (function (workbox) { 'use strict';
     "revision": "3bd3b3c24888a0efe87c499373ff1008"
   }, {
     "url": "index.html",
-    "revision": "06ea11790881c9a4dd7af56d8a743eb0"
+    "revision": "2f6e5c66a836a02e4d69254946e57421"
   }, {
     "url": "icon.svg",
     "revision": "59651fa4efa0e39e8d4d2ec4d6f8b07e"
@@ -95,13 +95,100 @@ define(['./workbox-afac4cd2'], (function (workbox) { 'use strict';
     "url": "apple-touch-icon.png",
     "revision": "b39d19c6ac5745e86d6ebaa3af80e31f"
   }, {
+    "url": "assets/yamamoto_ryugin_tuna_1794763490178-Bs5g_SSq.jpg",
+    "revision": null
+  }, {
     "url": "assets/workbox-window.prod.es5-Bd17z0YL.js",
     "revision": null
   }, {
-    "url": "assets/index-FAOrXPsn.css",
+    "url": "assets/viannay_volaille_bresse_1794763489243-CURnD-cb.jpg",
     "revision": null
   }, {
-    "url": "assets/index-Dt-y1qRH.js",
+    "url": "assets/smyth_scallop_scotland_1794763489756-BA994FAC.jpg",
+    "revision": null
+  }, {
+    "url": "assets/rosier_merlu_basque_1794763485893-CgLpirv0.jpg",
+    "revision": null
+  }, {
+    "url": "assets/roca_poularde_catalane_1794763488658-a7uOgnDb.jpg",
+    "revision": null
+  }, {
+    "url": "assets/renaut_omble_sapin_1794763485651-D8I7QPda.jpg",
+    "revision": null
+  }, {
+    "url": "assets/pic_berlingots_banon_1794763483845-D3EK_K09.jpg",
+    "revision": null
+  }, {
+    "url": "assets/mazzia_langoustine_cedre_1794763483576-D70wCaSQ.jpg",
+    "revision": null
+  }, {
+    "url": "assets/martinez_central_lima_1794763493524-Bn8LLX9J.jpg",
+    "revision": null
+  }, {
+    "url": "assets/lesquer_spaghetti_truffe_1794763487237-CCMNn_W6.jpg",
+    "revision": null
+  }, {
+    "url": "assets/index-C5Aj9x-r.js",
+    "revision": null
+  }, {
+    "url": "assets/index-BrTwSiip.css",
+    "revision": null
+  }, {
+    "url": "assets/humm_racines_hiver_1794763490497-CsoyK7cu.jpg",
+    "revision": null
+  }, {
+    "url": "assets/hero_gastronomy_atelier_1794762906221-DBiMQkF-.jpg",
+    "revision": null
+  }, {
+    "url": "assets/haeberlin_saumon_souffle_1794763487149-Bi_0xJrG.jpg",
+    "revision": null
+  }, {
+    "url": "assets/gagnaire_grand_dessert_1794763487853-B4WqupxN.jpg",
+    "revision": null
+  }, {
+    "url": "assets/dish_sea_scallop_citrus_1794762905223-DQLPLK5F.jpg",
+    "revision": null
+  }, {
+    "url": "assets/dish_poultry_truffle_1794762906157-B2t0bKSM.jpg",
+    "revision": null
+  }, {
+    "url": "assets/dish_nordic_ferment_1794762907367-_blxWi15.jpg",
+    "revision": null
+  }, {
+    "url": "assets/dish_japanese_kaiseki_1794762907451-CaTYaeDi.jpg",
+    "revision": null
+  }, {
+    "url": "assets/dish_italian_parmigiano_1794762907476-7ujSj0ey.jpg",
+    "revision": null
+  }, {
+    "url": "assets/dish_chocolate_souffle_1794762907635-DYPi7AgN.jpg",
+    "revision": null
+  }, {
+    "url": "assets/dish_botanical_tart_1794762904718-BLhs7kiR.jpg",
+    "revision": null
+  }, {
+    "url": "assets/dining_room_michelin_1794762909547-CVYGDnan.jpg",
+    "revision": null
+  }, {
+    "url": "assets/crenn_scallop_pacific_1794763492180-BYlI3oaJ.jpg",
+    "revision": null
+  }, {
+    "url": "assets/colagreco_betterave_caviar_1794763484870-06z1rok1.jpg",
+    "revision": null
+  }, {
+    "url": "assets/chef_plating_detail_1794762908623-CfBWAjzq.jpg",
+    "revision": null
+  }, {
+    "url": "assets/caminada_pigeonneau_grisons_1794763491479-B7HdTBv1.jpg",
+    "revision": null
+  }, {
+    "url": "assets/bras_coulant_chocolat_1794763487241-BCgl8K5t.jpg",
+    "revision": null
+  }, {
+    "url": "assets/bacquie_aioli_cabillaud_1794763485390-DD3PSXLY.jpg",
+    "revision": null
+  }, {
+    "url": "assets/arzak_langoustine_cacao_1794763490223-D21iXvu8.jpg",
     "revision": null
   }, {
     "url": "apple-touch-icon.png",

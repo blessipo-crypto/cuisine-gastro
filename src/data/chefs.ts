@@ -2,36 +2,66 @@ import { Chef, CuisineCategory } from '../types/chef';
 import { CHEF_TECHNICAL_META } from './chefTechnicalMeta';
 import { CHEF_CONTACT_META } from './chefContactMeta';
 
+import heroAtelierImg from '../assets/images/hero_gastronomy_atelier_1794762906221.jpg';
+import scallopCitrusImg from '../assets/images/dish_sea_scallop_citrus_1794762905223.jpg';
+import botanicalTartImg from '../assets/images/dish_botanical_tart_1794762904718.jpg';
+import poultryTruffleImg from '../assets/images/dish_poultry_truffle_1794762906157.jpg';
+import japaneseKaisekiImg from '../assets/images/dish_japanese_kaiseki_1794762907451.jpg';
+import italianParmigianoImg from '../assets/images/dish_italian_parmigiano_1794762907476.jpg';
+import nordicFermentImg from '../assets/images/dish_nordic_ferment_1794762907367.jpg';
+import chocolateSouffleImg from '../assets/images/dish_chocolate_souffle_1794762907635.jpg';
+import chefPlatingImg from '../assets/images/chef_plating_detail_1794762908623.jpg';
+import diningRoomImg from '../assets/images/dining_room_michelin_1794762909547.jpg';
+import picBerlingotsImg from '../assets/images/pic_berlingots_banon_1794763483845.jpg';
+import mazziaLangoustineImg from '../assets/images/mazzia_langoustine_cedre_1794763483576.jpg';
+import colagrecoBetteraveImg from '../assets/images/colagreco_betterave_caviar_1794763484870.jpg';
+import renautOmbleImg from '../assets/images/renaut_omble_sapin_1794763485651.jpg';
+import bacquieCabillaudImg from '../assets/images/bacquie_aioli_cabillaud_1794763485390.jpg';
+import haeberlinSaumonImg from '../assets/images/haeberlin_saumon_souffle_1794763487149.jpg';
+import rosierMerluImg from '../assets/images/rosier_merlu_basque_1794763485893.jpg';
+import brasCoulantImg from '../assets/images/bras_coulant_chocolat_1794763487241.jpg';
+import lesquerSpaghettiImg from '../assets/images/lesquer_spaghetti_truffe_1794763487237.jpg';
+import gagnaireDessertImg from '../assets/images/gagnaire_grand_dessert_1794763487853.jpg';
+import viannayVolailleImg from '../assets/images/viannay_volaille_bresse_1794763489243.jpg';
+import rocaPoulardeImg from '../assets/images/roca_poularde_catalane_1794763488658.jpg';
+import smythScallopImg from '../assets/images/smyth_scallop_scotland_1794763489756.jpg';
+import yamamotoTunaImg from '../assets/images/yamamoto_ryugin_tuna_1794763490178.jpg';
+import arzakLangoustineImg from '../assets/images/arzak_langoustine_cacao_1794763490223.jpg';
+import hummRacinesImg from '../assets/images/humm_racines_hiver_1794763490497.jpg';
+import crennScallopImg from '../assets/images/crenn_scallop_pacific_1794763492180.jpg';
+import caminadaPigeonneauImg from '../assets/images/caminada_pigeonneau_grisons_1794763491479.jpg';
+import martinezLimaImg from '../assets/images/martinez_central_lima_1794763493524.jpg';
+
 export const ASSETS = {
-  heroAtelier: '/src/assets/images/hero_gastronomy_atelier_1794762906221.jpg',
-  scallopCitrus: '/src/assets/images/dish_sea_scallop_citrus_1794762905223.jpg',
-  botanicalTart: '/src/assets/images/dish_botanical_tart_1794762904718.jpg',
-  poultryTruffle: '/src/assets/images/dish_poultry_truffle_1794762906157.jpg',
-  japaneseKaiseki: '/src/assets/images/dish_japanese_kaiseki_1794762907451.jpg',
-  italianParmigiano: '/src/assets/images/dish_italian_parmigiano_1794762907476.jpg',
-  nordicFerment: '/src/assets/images/dish_nordic_ferment_1794762907367.jpg',
-  chocolateSouffle: '/src/assets/images/dish_chocolate_souffle_1794762907635.jpg',
-  chefPlating: '/src/assets/images/chef_plating_detail_1794762908623.jpg',
-  diningRoom: '/src/assets/images/dining_room_michelin_1794762909547.jpg',
-  picBerlingots: '/src/assets/images/pic_berlingots_banon_1794763483845.jpg',
-  mazziaLangoustine: '/src/assets/images/mazzia_langoustine_cedre_1794763483576.jpg',
-  colagrecoBetterave: '/src/assets/images/colagreco_betterave_caviar_1794763484870.jpg',
-  renautOmble: '/src/assets/images/renaut_omble_sapin_1794763485651.jpg',
-  bacquieCabillaud: '/src/assets/images/bacquie_aioli_cabillaud_1794763485390.jpg',
-  haeberlinSaumon: '/src/assets/images/haeberlin_saumon_souffle_1794763487149.jpg',
-  rosierMerlu: '/src/assets/images/rosier_merlu_basque_1794763485893.jpg',
-  brasCoulant: '/src/assets/images/bras_coulant_chocolat_1794763487241.jpg',
-  lesquerSpaghetti: '/src/assets/images/lesquer_spaghetti_truffe_1794763487237.jpg',
-  gagnaireDessert: '/src/assets/images/gagnaire_grand_dessert_1794763487853.jpg',
-  viannayVolaille: '/src/assets/images/viannay_volaille_bresse_1794763489243.jpg',
-  rocaPoularde: '/src/assets/images/roca_poularde_catalane_1794763488658.jpg',
-  smythScallop: '/src/assets/images/smyth_scallop_scotland_1794763489756.jpg',
-  yamamotoTuna: '/src/assets/images/yamamoto_ryugin_tuna_1794763490178.jpg',
-  arzakLangoustine: '/src/assets/images/arzak_langoustine_cacao_1794763490223.jpg',
-  hummRacines: '/src/assets/images/humm_racines_hiver_1794763490497.jpg',
-  crennScallop: '/src/assets/images/crenn_scallop_pacific_1794763492180.jpg',
-  caminadaPigeonneau: '/src/assets/images/caminada_pigeonneau_grisons_1794763491479.jpg',
-  martinezLima: '/src/assets/images/martinez_central_lima_1794763493524.jpg',
+  heroAtelier: heroAtelierImg,
+  scallopCitrus: scallopCitrusImg,
+  botanicalTart: botanicalTartImg,
+  poultryTruffle: poultryTruffleImg,
+  japaneseKaiseki: japaneseKaisekiImg,
+  italianParmigiano: italianParmigianoImg,
+  nordicFerment: nordicFermentImg,
+  chocolateSouffle: chocolateSouffleImg,
+  chefPlating: chefPlatingImg,
+  diningRoom: diningRoomImg,
+  picBerlingots: picBerlingotsImg,
+  mazziaLangoustine: mazziaLangoustineImg,
+  colagrecoBetterave: colagrecoBetteraveImg,
+  renautOmble: renautOmbleImg,
+  bacquieCabillaud: bacquieCabillaudImg,
+  haeberlinSaumon: haeberlinSaumonImg,
+  rosierMerlu: rosierMerluImg,
+  brasCoulant: brasCoulantImg,
+  lesquerSpaghetti: lesquerSpaghettiImg,
+  gagnaireDessert: gagnaireDessertImg,
+  viannayVolaille: viannayVolailleImg,
+  rocaPoularde: rocaPoulardeImg,
+  smythScallop: smythScallopImg,
+  yamamotoTuna: yamamotoTunaImg,
+  arzakLangoustine: arzakLangoustineImg,
+  hummRacines: hummRacinesImg,
+  crennScallop: crennScallopImg,
+  caminadaPigeonneau: caminadaPigeonneauImg,
+  martinezLima: martinezLimaImg,
 };
 
 export const CUISINE_INDEX_CATEGORIES: {
