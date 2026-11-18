@@ -27,12 +27,12 @@ jobs:
 
       - name: Compiler l'application web
         run: |
-          npm install
+          npm install --legacy-peer-deps
           npm run build
 
       - name: Convertir en projet Android (Capacitor)
         run: |
-          npm install @capacitor/core @capacitor/cli @capacitor/android
+          npm install --legacy-peer-deps @capacitor/core @capacitor/cli @capacitor/android
           if [ ! -f capacitor.config.json ] && [ ! -f capacitor.config.ts ]; then
             npx cap init "AppliCuisine" "com.cuisine.app" --web-dir=dist
           fi
